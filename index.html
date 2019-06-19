@@ -1,0 +1,90 @@
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Kingdom Hearts RPG</title>
+    </head>
+    <body>
+        <h1>Kindgdom Hearts RPG</h1>
+
+        <div id="your-character" class="row text-center">
+            <div class="col-md-2 border border-primary" toon="mickey">
+                <p>Mickey</p>
+                <img class= "img-fluid" src="assets/images/mickey.png" alt="Mickey" style="max-width: 40%; height: auto;">
+            </div>
+            <div class="col-md-2 border border-primary" toon="donald"">
+                <p>Donald</p>
+                <img class= "img-fluid" src="assets/images/donald.png" alt="Donald" style="max-width: 40%; height: auto;">
+            </div>
+            <div class="col-md-2 border border-primary" toon="goofy">
+                <p>Goofy</p>
+                <img class= "img-fluid" src="assets/images/goofy.png" alt="Goofy" style="max-width: 45%; height: auto;">
+            </div>
+            <div class="col-md-2 border border-primary" toon="pete">
+                <p>Pete</p>
+                <img class= "img-fluid" src="assets/images/pete.png" alt="Pete" style="max-width: 50%; height: auto;">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Your Character</h3>
+            </div>
+        </div>
+
+        <div id="your-opponents" class="row text-center mt-3">
+            <div class="col-md-2 border border-danger">
+                <p>Opponent 1</p>
+            </div>
+            <div class="col-md-2 border border-danger">
+                <p>Opponent 2</p>
+            </div>
+            <div class="col-md-2 border border-danger">
+                <p>Opponent 3</p>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <h3>Fight Section</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button id="primary-attack">Attack</button>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <h3>Defender</h3>
+            </div>
+        </div>
+
+        <div id="picked-opponent" class="row text-center">
+            <div class="col-md-2">
+                <p>Picked Defender</p>
+            </div>
+            <div class="col-md-10">
+            </div>
+        </div>
+
+        <div id="damage-recount" class="row">
+            <div class="col-md-4">
+                <p id="pl-dmg-dealt">Player Damage Dealt</p>
+                <p id="pl-dmg-taken">Player Damage Taken</p>
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>    
+               
+        <script src="assets/javascript/game.js"></script>
+        <footer class="toesocks"></footer>
+    </body>
+</html>
