@@ -2,26 +2,27 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>Kingdom Hearts RPG</title>
     </head>
     <body>
-        <h1>Kindgdom Hearts RPG</h1>
+        <h1>Kingdom Hearts RPG</h1>
 
         <div id="your-character" class="row text-center">
-            <div class="col-md-2 border border-primary" toon="mickey">
+            <div class="toon col-md-2 border border-primary" toonId="mickey">
                 <p>Mickey</p>
                 <img class= "img-fluid" src="assets/images/mickey.png" alt="Mickey" style="max-width: 40%; height: auto;">
             </div>
-            <div class="col-md-2 border border-primary" toon="donald"">
+            <div class="toon col-md-2 border border-primary" toonId="donald"">
                 <p>Donald</p>
                 <img class= "img-fluid" src="assets/images/donald.png" alt="Donald" style="max-width: 40%; height: auto;">
             </div>
-            <div class="col-md-2 border border-primary" toon="goofy">
+            <div class="toon col-md-2 border border-primary" toonId="goofy">
                 <p>Goofy</p>
                 <img class= "img-fluid" src="assets/images/goofy.png" alt="Goofy" style="max-width: 45%; height: auto;">
             </div>
-            <div class="col-md-2 border border-primary" toon="pete">
+            <div class="toon col-md-2 border border-primary" toonId="pete">
                 <p>Pete</p>
                 <img class= "img-fluid" src="assets/images/pete.png" alt="Pete" style="max-width: 50%; height: auto;">
             </div>
@@ -36,17 +37,6 @@
         </div>
 
         <div id="your-opponents" class="row text-center mt-3">
-            <div class="col-md-2 border border-danger">
-                <p>Opponent 1</p>
-            </div>
-            <div class="col-md-2 border border-danger">
-                <p>Opponent 2</p>
-            </div>
-            <div class="col-md-2 border border-danger">
-                <p>Opponent 3</p>
-            </div>
-            <div class="col-md-6">
-            </div>
         </div>
 
         <div class="row mt-3">
@@ -68,9 +58,6 @@
         </div>
 
         <div id="picked-opponent" class="row text-center">
-            <div class="col-md-2">
-                <p>Picked Defender</p>
-            </div>
             <div class="col-md-10">
             </div>
         </div>
