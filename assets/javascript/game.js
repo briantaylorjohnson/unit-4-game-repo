@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
     
     // Global variables which need to be instantiated and reset when the player wishes to play again
     var toons = [];
@@ -9,10 +11,10 @@ $(document).ready(function() {
     var playerHealth = 0;
 
     // Playable toons onbjects and their attributes
-    var mickeyObj = {id: "mickey", name: "Mickey", hp: 100, ap: 75, cap: 125, attackMove: "Ear Slap"};
-    var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 65, cap: 150, attackMove: "Wing Flap"};
-    var goofyObj = {id: "goofy", name: "Goofy", hp: 150, ap: 50, cap: 75, attackMove: "Seismic Chuckle"};
-    var peteObj = {id: "pete", name: "Pete", hp: 200, ap: 40, cap: 50, attackMove: "Belly Bounce"};
+    var mickeyObj = {id: "mickey", name: "Mickey", hp: 100, ap: 10, cap: 5, attackMove: "Ear Slap"};
+    var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 5, cap: 15, attackMove: "Wing Flap"};
+    var goofyObj = {id: "goofy", name: "Goofy", hp: 75, ap: 15, cap: 15, attackMove: "Seismic Chuckle"};
+    var peteObj = {id: "pete", name: "Pete", hp: 150, ap: 5, cap: 10, attackMove: "Belly Bounce"};
 
     // Builds the array of playable toons to easily retrieve attributes for each toon during gameplay
     function buildToonArray()
@@ -90,11 +92,17 @@ $(document).ready(function() {
                 boostedAp = boostedAp + getToonAp(toonPickedId);
                 oppHealth = oppHealth - boostedAp;
                 console.log("Attack Power: " + boostedAp);
-                console.log("Opponent Health: " + oppHealth);  
+                console.log("Opponent Health: " + oppHealth);
+                
+                $("#picked-opponent").find(".hp").empty();
+                $("#picked-opponent").find(".hp").append(oppHealth);
 
                 playerHealth = playerHealth - getToonCap(oppPickedId);
                 console.log("Counter Attack Power: " + getToonCap(oppPickedId));
                 console.log("Player Health: " + playerHealth);
+
+                $("#your-character").find(".hp").empty();
+                $("#your-character").find(".hp").append(playerHealth);
     }
 
     function pickToon(toonId)
@@ -120,12 +128,22 @@ $(document).ready(function() {
         }
     }
 
-
-
-    
+    function getToonStats()
+    {
+        $(".hp").each(function()
+        {
+            toonId = $(this).parent().attr("toonId");
+            console.log(toonId);
+            $(this).append(getToonHp(toonId));
+        });
+    };
 
     // Invokes the buildToonArray() function to populate the list of playable toons and their attributes
     buildToonArray();
+
+    // Invokes the getToonStats() function to load the initial stats for the toons
+    getToonStats();
+
 
     // Returns the toons array in the console for debugging and validation if new toons are added
     console.log(toons);
