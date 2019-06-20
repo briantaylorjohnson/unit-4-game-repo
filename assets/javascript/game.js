@@ -103,6 +103,14 @@ $(document).ready(function() {
 
                 $("#your-character").find(".hp").empty();
                 $("#your-character").find(".hp").append(playerHealth);
+
+                // Updates the DOM with the attack damage read out of the player's toon to the picked opponent
+                $("#pl-dmg-dealt").empty();
+                $("#pl-dmg-dealt").append("You attack " + getToonName(oppPickedId) + " with " + getToonName(toonPickedId) + "'s " + getToonAttackMove(toonPickedId) + " dealing " + boostedAp + " damage.");
+
+                // Updates the DOM with the counter attack damage read out of the picked opponent to the player's toon
+                $("#pl-dmg-taken").empty();
+                $("#pl-dmg-taken").append(getToonName(oppPickedId) + " counter attacks you with " + getToonAttackMove(oppPickedId) + " dealing " + getToonCap(oppPickedId) + " damage.");
     }
 
     function pickToon(toonId)
