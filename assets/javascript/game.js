@@ -208,6 +208,10 @@ $(document).ready(function() {
             {
                 alert("You can't fight yourself, silly!");
             }
+            else if (parseInt($(this).find(".hp").text()) == 0)
+            {
+                alert("This opponent has been knocked out! Pick a different opponent.");
+            }
             else
             {
                 oppPickedId = $(this).attr("toonId");    
