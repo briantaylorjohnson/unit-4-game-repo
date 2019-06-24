@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-
-    
     // Global variables which need to be instantiated and reset when the player wishes to play again
     var toons = [];
     var toonPickedId = "";
@@ -16,6 +14,43 @@ $(document).ready(function() {
     var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 10, cap: 10, attackMove: "Wing Flap"};
     var goofyObj = {id: "goofy", name: "Goofy", hp: 100, ap: 15, cap: 5, attackMove: "Seismic Chuckle"};
     var peteObj = {id: "pete", name: "Pete", hp: 150, ap: 5, cap: 20, attackMove: "Belly Bounce"};
+
+    // Retrieves the stats for all of the toons available to the player when the game loads and updates the DOM accordingly
+    function getToonStats()
+    {
+        $(".hp").each(function()
+        {
+            $(this).empty();
+            toonId = $(this).parent().attr("toonId");
+            console.log(toonId);
+            $(this).append(getToonHp(toonId));
+        });
+    }
+
+    // When a toon is picked by the player, the toon's health is set for the game
+    function pickToon(toonId)
+    {
+        for (i = 0; i < toons.length; i++)
+        {
+            if (toons[i].id == toonId)
+            {
+                playerHealth = toons[i].hp;
+            }
+        }
+    }
+
+    // When an opponent toon is picked by the player, the opponent's health is set for the game
+    function pickOpponent(toonId)
+    {
+        for (i = 0; i < toons.length; i++)
+        {
+            if (toons[i].id == toonId)
+            {
+                oppHealth = toons[i].hp;
+                console.log("Opp Initial Health: " + oppHealth);
+            }
+        }
+    }
 
     // Builds the array of playable toons to easily retrieve attributes for each toon during gameplay
     function buildToonArray()
@@ -106,6 +141,7 @@ $(document).ready(function() {
             primaryAttack(toonPickedId, oppPickedId);
             toonKnockedOut();
 
+            // Determines when the player has defeated three opponents and wins the game
             if( victories == 3)
             {
                 $("#pl-dmg-dealt").empty();
@@ -117,7 +153,7 @@ $(document).ready(function() {
                 $("#primary-attack").hide();
                 $("#restart-game").show();
             }
-        }, 2000);
+        }, 1000);
     }
 
     // primaryAttack() function to reduce the picked toon's health points and opponent's health points, as well as update the DOM accordingly 
@@ -159,76 +195,51 @@ $(document).ready(function() {
                 $("#pl-dmg-taken").append(getToonName(oppPickedId) + " counter attacks you with " + getToonAttackMove(oppPickedId) + " dealing " + getToonCap(oppPickedId) + " damage.");
     }
 
-    // Need to make changes to this because it is redundant with getToonHp()
-    function pickToon(toonId)
-    {
-        for (i = 0; i < toons.length; i++)
-        {
-            if (toons[i].id == toonId)
-            {
-                playerHealth = toons[i].hp;
-            }
-        }
-    }
-
-    // Need to make changes to this because it is redundant with getToonHp()
-    function pickOpponent(toonId)
-    {
-        for (i = 0; i < toons.length; i++)
-        {
-            if (toons[i].id == toonId)
-            {
-                oppHealth = toons[i].hp;
-                console.log("Opp Initial Health: " + oppHealth);
-            }
-        }
-    }
-
-    // Retrieves the stats for all of the toons available to the player when the game loads and updates the DOM accordingly
-    function getToonStats()
-    {
-        $(".hp").each(function()
-        {
-            $(this).empty();
-            toonId = $(this).parent().attr("toonId");
-            console.log(toonId);
-            $(this).append(getToonHp(toonId));
-        });
-    }
-
-
+    // Determines if a toon has been knocked out (player or opponent) and updates the DOM accordingly
     function toonKnockedOut()
     {
         if (playerHealth <= 0)
         {
+            // Prevents player from having negative health
             playerHealth = 0;
 
+            // Updates player's toon HP in DOM
             $("#your-character").find(".hp").empty();
             $("#your-character").find(".hp").append(playerHealth);
 
+            // Tells the player that the game is over because his toon has been knocked out
             $("#pl-dmg-taken").empty();
             $("#pl-dmg-dealt").empty();
             $("#pl-dmg-dealt").append("You have been knocked out by " + getToonName(oppPickedId) + "! Gameover."); 
 
+            // Hides the Attack button and shows the Restart game button
             $("#primary-attack").hide();
             $("#restart-game").show();
         }
         else if (oppHealth <= 0)
         {
+            // Prevents opponent from having negative health
             oppHealth = 0;
             
+            // Updates opponents's toon HP in DOM
             $("#picked-opponent").find(".hp").empty();
             $("#picked-opponent").find(".hp").append(oppHealth);
 
+            // Tells the player that he has successfully knocked out the opponent
             $("#pl-dmg-taken").empty();
             $("#pl-dmg-dealt").empty();
             $("#pl-dmg-dealt").append("You have knocked out " + getToonName(oppPickedId) + "! Pick a new opponent."); 
             
+            // Removes the knocked out opponent from the game board
             $("#picked-opponent > .toon").hide();
 
+            // Ensures Attachkbutton is continuing to show
             $("#primary-attack").show();
             
+            // Setting the OppPickedId to an empty string allows the player to pick the next opponent
             oppPickedId = "";
+            
+            // Counts successful knockouts -- once three has been reached, the player has knocked out all opponents
             victories++;
         }
         else
@@ -254,17 +265,22 @@ $(document).ready(function() {
 
     $(".toon").on("click", function()
     {
-
+        // Conditional that allows the player to pick an opponent after he has picked his toon
         if (toonPickedId != "" && oppPickedId == "")
         {
+            // Conditional that prevents the player from picking his toon as an opponent
             if ($(this).attr("toonId") == toonPickedId)
             {
                 alert("You can't fight yourself, silly!");
             }
+
+            // Conditional that prevents the player from picking a knocked out opponent
             else if (parseInt($(this).find(".hp").text()) == 0)
             {
                 alert("This opponent has been knocked out! Pick a different opponent.");
             }
+
+            // When the player picks a valid opponent, this moves the toon to the defender space on the game board
             else
             {
                 oppPickedId = $(this).attr("toonId");    
@@ -274,15 +290,18 @@ $(document).ready(function() {
             }
         }
 
+        // Conditional that allows the player to pick his toon
         else if (toonPickedId == "" && oppPickedId == "")
         {
             toonPickedId = $(this).attr("toonId");
             pickToon(toonPickedId);
             console.log("Toon Picked: " + getToonName(toonPickedId));
             
+            // Moves unpicked toons to opponnents space on game board
             $(".toon").appendTo("#your-opponents");
             $(this).prependTo("#your-character");
 
+            // Updates CSS borders for opponents (to red)
             $(".toon").toggleClass("border-success");
             $(".toon").toggleClass("border-danger");
             $(this).toggleClass("border-success");
@@ -291,30 +310,41 @@ $(document).ready(function() {
         }
     });
 
+    // Listener for clicks on the Attack button when it is active
     $("#primary-attack").on("click", function()
     {
+        // Conditional which checks to see if the player has picked a toon and an opponent
         if(toonPickedId != "" && oppPickedId != "")
         {
             attackStart();
         }
+        // Alerts the player if he has not picked a toon to play with or an opponent to battle against
         else
         {
             alert("You must pick a character and opponent first!");
         }
     });
     
+    // Listener for clicks on the Restart button when it is active
     $("#restart-game").on("click", function()
     {
+        // Empties the damage recount in DOM
         $("#pl-dmg-taken").empty();
         $("#pl-dmg-dealt").empty();
+
+        // Hides Restart button and shows the Attack button
         $("#restart-game").hide();
         $("#primary-attack").show();
 
+        // Updates the CSS borders in the DOM for the toons when game is restarted
         $(".toon").removeClass("border-danger");
         $(".toon").addClass("border-success");
 
+        // Shows all toons and moves them to the correct space on gameboard for the player to play again
         $(".toon").show();
         $(".toon").prependTo("#your-character");
+
+        // Resets global variables for a new game and also resets all toon stats 
         toonPickedId = "";
         oppPickedId = "";
         boostedAp = 0;
