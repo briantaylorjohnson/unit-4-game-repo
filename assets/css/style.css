@@ -1,0 +1,26 @@
+.custom-border-width
+{
+    border-width: 3px !important;
+}
+
+.custom-text-color
+{
+    color: lightgrey;
+}
+
+.custom-div-bg
+{
+    background-color: #fff !important;
+}
+
+.custom-section-bg
+{
+    background-color: grey !important;
+}
+
+.custom-window-bg
+{
+    background-image: url("../images/kingdom-hearts-background.jpg") !important;
+    background-repeat: repeat-y !important;
+    background-size: 100%;
+}

@@ -4,82 +4,101 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/style.css"> 
         <title>Kingdom Hearts RPG</title>
     </head>
-    <body>
+    <body class="custom-window-bg">
         <div class="container">
-            <div class="row">
+            <div class="row border border-dark custom-border-width custom-section-bg mt-2 mb-2 px-2 pt-2">
+                <div class="col-md-12 pl-0">
+                    <h1 class="custom-text-color">Kingdom Hearts RPG</h1>
+                </div>
+            </div>
+            <div class="row border border-dark custom-border-width custom-section-bg px-2 pt-2">
                 <div class="col-md-12">
-                    <h1>Kingdom Hearts RPG</h1>
-                </div>
-            </div>
-            <div id="your-character" class="row text-center">
-                <div class="toon col-md-2 border border-primary" toonId="mickey">
-                    <p>Mickey</p>
-                    <p class="hp"></p>
-                    <img class= "img-fluid" src="assets/images/mickey.png" alt="Mickey" style="max-width: 40%; height: auto;">
-                </div>
-                <div class="toon col-md-2 border border-primary" toonId="donald"">
-                    <p>Donald</p>
-                    <p class="hp"></p>
-                    <img class= "img-fluid" src="assets/images/donald.png" alt="Donald" style="max-width: 40%; height: auto;">
-                </div>
-                <div class="toon col-md-2 border border-primary" toonId="goofy">
-                    <p>Goofy</p>
-                    <p class="hp"></p>
-                    <img class= "img-fluid" src="assets/images/goofy.png" alt="Goofy" style="max-width: 45%; height: auto;">
-                </div>
-                <div class="toon col-md-2 border border-primary" toonId="pete">
-                    <p>Pete</p>
-                    <p class="hp"></p>
-                    <img class= "img-fluid" src="assets/images/pete.png" alt="Pete" style="max-width: 50%; height: auto;">
-                </div>
-                <div class="col-md-4">
-                </div>
-            </div>
+                    <div id="your-character" class="row text-center">
+                        <div class="toon col-md-2 border border-success custom-border-width ml-1 mr-1 px-0 custom-div-bg" toonId="mickey">
+                            <p class="mb-0">Mickey</p>
+                            <img class= "img-fluid pt-1 pb-1" src="assets/images/mickey.png" alt="Mickey" style="width: auto; max-height: 141px;">
+                            <p class="hp mb-0"></p>
+                        </div>
+                        <div class="toon col-md-2 border border-success custom-border-width ml-1 mr-1 px-0 custom-div-bg" toonId="donald"">
+                            <p class="mb-0">Donald</p>
+                            <img class= "img-fluid pt-1 pb-1" src="assets/images/donald.png" alt="Donald" style="width: auto; max-height: 141px;">
+                            <p class="hp mb-0"></p>
+                        </div>
+                        <div class="toon col-md-2 border border-success custom-border-width ml-1 mr-1 px-0 custom-div-bg" toonId="goofy">
+                            <p class="mb-0">Goofy</p>
+                            <img class= "img-fluid pt-1 pb-1" src="assets/images/goofy.png" alt="Goofy" style="width: auto; max-height: 141px;">
+                            <p class="hp mb-0"></p>
+                        </div>
+                        <div class="toon col-md-2 border border-success custom-border-width ml-1 mr-1 px-0 custom-div-bg" toonId="pete">
+                            <p class="mb-0">Pete</p>
+                            <img class= "img-fluid pt-1 pb-1" src="assets/images/pete.png" alt="Pete" style="width: auto; max-height: 141px;">
+                            <p class="hp mb-0"></p>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
 
-            <div class="row">
+                    <div class="row">
+                        <div class="col-md-12 ml-1 pl-0">
+                            <h3 class="custom-text-color">Your Character</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border border-dark custom-border-width custom-section-bg mb-2 px-2 pt-2 mt-2">
                 <div class="col-md-12">
-                    <h3>Your Character</h3>
+                    <div class="row">
+                        <div = class="col-md-12">
+                            <div id="your-opponents" class="row text-center">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 pl-0">
+                            <h3 class="custom-text-color">Opponents</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div id="your-opponents" class="row text-center mt-3">
-            </div>
-
-            <div class="row mt-3">
+            <div class="row border border-dark custom-border-width custom-section-bg mb-2 px-2 pt-2 mt-2">
                 <div class="col-md-12">
-                    <h3>Fight Section</h3>
+                    <div class="row">
+                        <div class="col-md-12 pl-0 ml-1">
+                            <h3 class="custom-text-color">Fight Controls</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 pl-0 mb-2 ml-1">
+                            <button id="primary-attack">Attack</button>
+                            <button id="restart-game">Restart</button>
+                            <div class="spinner-grow text-warning" role="status">
+                                    <span class="sr-only">Attacking...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="row">
+            <div class="row border border-dark custom-border-width custom-section-bg mb-2 px-2 pt-2 mt-2">
                 <div class="col-md-12">
-                    <button id="primary-attack">Attack</button>
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-md-12 pl-0 ml-1">
+                            <h3 class="custom-text-color">Defender</h3>
+                        </div>
+                    </div>
 
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <h3>Defender</h3>
-                </div>
-            </div>
-
-            <div id="picked-opponent" class="row text-center">
-                <div class="col-md-10">
-                </div>
-            </div>
-
-            <div id="damage-recount" class="row">
-                <div class="col-md-4">
-                    <p id="pl-dmg-dealt"></p>
-                    <p id="pl-dmg-taken"></p>
-                </div>
-                <div class="col-md-8">
+                    <div id="picked-opponent" class="row text-center pb-2 pl-0">                       
+                        <div id="damage-recount" class="col-md-9 text-left pl-0">
+                                <span id="pl-dmg-dealt"></span>
+                                <br />
+                                <span id="pl-dmg-taken"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-               
         <script src="assets/javascript/game.js"></script>
         <footer class="toesocks"></footer>
     </body>

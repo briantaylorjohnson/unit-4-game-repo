@@ -12,9 +12,9 @@ $(document).ready(function() {
     var victories = 0;
 
     // Playable toons onbjects and their attributes
-    var mickeyObj = {id: "mickey", name: "Mickey", hp: 100, ap: 1000, cap: 5, attackMove: "Ear Slap"};
-    var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 5, cap: 15, attackMove: "Wing Flap"};
-    var goofyObj = {id: "goofy", name: "Goofy", hp: 75, ap: 15, cap: 15, attackMove: "Seismic Chuckle"};
+    var mickeyObj = {id: "mickey", name: "Mickey", hp: 100, ap: 10, cap: 5, attackMove: "Ear Slap"};
+    var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 5, cap: 25, attackMove: "Wing Flap"};
+    var goofyObj = {id: "goofy", name: "Goofy", hp: 75, ap: 15, cap: 1000, attackMove: "Seismic Chuckle"};
     var peteObj = {id: "pete", name: "Pete", hp: 150, ap: 5, cap: 10, attackMove: "Belly Bounce"};
 
     // Builds the array of playable toons to easily retrieve attributes for each toon during gameplay
@@ -87,10 +87,46 @@ $(document).ready(function() {
           
     }
 
+    // Function which initiates the attack on the opponent with the Attack Spinner and then outputs the damage
+    function attackStart()
+    {
+        $("#pl-dmg-dealt").empty();
+        $("#pl-dmg-taken").empty();
+
+        // Attack Spinner showed to player when he initiates an attack
+        $("#primary-attack").hide();
+        $(".spinner-grow").show();
+        console.log("Attacking...");
+
+        $("#pl-dmg-taken").append("Attacking...");
+
+        // Invokes primaryAttack() to calculate attack and counter attack damage and then display to player
+        setTimeout(function()
+        {
+            primaryAttack(toonPickedId, oppPickedId);
+            toonKnockedOut();
+
+            if( victories == 3)
+            {
+                $("#pl-dmg-dealt").empty();
+                $("#pl-dmg-dealt").append("Congratulations, " + getToonName(toonPickedId) + "!");
+                $("#pl-dmg-taken").append("You have knocked out all three opponents. Pick a toon to play again.");
+                $(".toon").show();
+                $(".toon").appendTo("#your-opponents");
+
+                $("#primary-attack").hide();
+                $("#restart-game").show();
+            }
+        }, 2000);
+    }
+
     // primaryAttack() function to reduce the picked toon's health points and opponent's health points, as well as update the DOM accordingly 
     function primaryAttack(toonPickedId, oppPickedId)
     {
-                
+                // Hides the Attack Spinner once the attack and counter attack have been performed
+                $(".spinner-grow").hide();
+                $("#pl-dmg-taken").empty();     
+
                 // Increases the attack power of the player's toon after a successful primary attack (as defined in the functional specification/instructions)
                 boostedAp = boostedAp + getToonAp(toonPickedId);
                 
@@ -104,20 +140,22 @@ $(document).ready(function() {
                 $("#picked-opponent").find(".hp").append(oppHealth);
 
                 // Calculates the player toon's health after receiving counter attack damage
-                playerHealth = playerHealth - getToonCap(oppPickedId);
-                console.log("Counter Attack Power: " + getToonCap(oppPickedId));
-                console.log("Player Health: " + playerHealth);
+                // (Only if player toon did not knock out oppoonent first)
+                if (oppHealth > 0)
+                {
+                    playerHealth = playerHealth - getToonCap(oppPickedId);
+                    console.log("Counter Attack Power: " + getToonCap(oppPickedId));
+                    console.log("Player Health: " + playerHealth);
+                }
 
                 // Updates the DOM with the player toon's health after receiving counter attack damage
                 $("#your-character").find(".hp").empty();
                 $("#your-character").find(".hp").append(playerHealth);
 
                 // Updates the DOM with the attack damage read out to the opponent's toon
-                $("#pl-dmg-dealt").empty();
                 $("#pl-dmg-dealt").append("You attack " + getToonName(oppPickedId) + " with " + getToonName(toonPickedId) + "'s " + getToonAttackMove(toonPickedId) + " dealing " + boostedAp + " damage.");
 
                 // Updates the DOM with the counter attack damage read out to the player's toon
-                $("#pl-dmg-taken").empty();
                 $("#pl-dmg-taken").append(getToonName(oppPickedId) + " counter attacks you with " + getToonAttackMove(oppPickedId) + " dealing " + getToonCap(oppPickedId) + " damage.");
     }
 
@@ -171,6 +209,9 @@ $(document).ready(function() {
             $("#pl-dmg-taken").empty();
             $("#pl-dmg-dealt").empty();
             $("#pl-dmg-dealt").append("You have been knocked out by " + getToonName(oppPickedId) + "! Gameover."); 
+
+            $("#primary-attack").hide();
+            $("#restart-game").show();
         }
         else if (oppHealth <= 0)
         {
@@ -181,11 +222,18 @@ $(document).ready(function() {
 
             $("#pl-dmg-taken").empty();
             $("#pl-dmg-dealt").empty();
-            $("#pl-dmg-dealt").append("You have  knocked out " + getToonName(oppPickedId) + "! Pick a new opponent."); 
+            $("#pl-dmg-dealt").append("You have knocked out " + getToonName(oppPickedId) + "! Pick a new opponent."); 
             
-            $("#picked-opponent > .toon").appendTo("#your-opponents");
+            $("#picked-opponent > .toon").hide();
+
+            $("#primary-attack").show();
+            
             oppPickedId = "";
             victories++;
+        }
+        else
+        {
+            $("#primary-attack").show();
         }
     }
 
@@ -195,6 +243,11 @@ $(document).ready(function() {
     // Invokes the getToonStats() function to load the initial stats for the toons
     getToonStats();
 
+    // Hides the Attack Spinner before the player initiates an attack
+    $(".spinner-grow").hide();
+    
+    // Hides the Restart button until the player wins/loses the game
+    $("#restart-game").hide();
 
     // Returns the toons array in the console for debugging and validation if new toons are added
     console.log(toons);
@@ -226,8 +279,15 @@ $(document).ready(function() {
             toonPickedId = $(this).attr("toonId");
             pickToon(toonPickedId);
             console.log("Toon Picked: " + getToonName(toonPickedId));
+            
             $(".toon").appendTo("#your-opponents");
             $(this).prependTo("#your-character");
+
+            $(".toon").toggleClass("border-success");
+            $(".toon").toggleClass("border-danger");
+            $(this).toggleClass("border-success");
+            $(this).toggleClass("border-danger");
+
         }
     });
 
@@ -235,24 +295,7 @@ $(document).ready(function() {
     {
         if(toonPickedId != "" && oppPickedId != "")
         {
-            alert("Fire in the hole!");
-            primaryAttack(toonPickedId, oppPickedId);
-            toonKnockedOut();
-            
-            if( victories == 3)
-            {
-                $("#pl-dmg-dealt").empty();
-                $("#pl-dmg-dealt").append("Congratulations, " + getToonName(toonPickedId) + "!");
-                $("#pl-dmg-taken").append("You have knocked out all three opponents. Pick a toon to play again.");
-                $(".toon").appendTo("#your-opponents");
-
-                toonPickedId = "";
-                oppPickedId = "";
-                boostedAp = 0;
-                victories = 0;
-
-                getToonStats();
-            }
+            attackStart();
         }
         else
         {
@@ -260,4 +303,22 @@ $(document).ready(function() {
         }
     });
     
+    $("#restart-game").on("click", function()
+    {
+        $("#pl-dmg-taken").empty();
+        $("#pl-dmg-dealt").empty();
+        $("#restart-game").hide();
+        $("#primary-attack").show();
+
+        $(".toon").removeClass("border-danger");
+        $(".toon").addClass("border-success");
+
+        $(".toon").show();
+        $(".toon").prependTo("#your-character");
+        toonPickedId = "";
+        oppPickedId = "";
+        boostedAp = 0;
+        victories = 0;
+        getToonStats();
+    });
 });
