@@ -12,10 +12,10 @@ $(document).ready(function() {
     var victories = 0;
 
     // Playable toons onbjects and their attributes
-    var mickeyObj = {id: "mickey", name: "Mickey", hp: 100, ap: 10, cap: 5, attackMove: "Ear Slap"};
-    var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 5, cap: 25, attackMove: "Wing Flap"};
-    var goofyObj = {id: "goofy", name: "Goofy", hp: 75, ap: 15, cap: 1000, attackMove: "Seismic Chuckle"};
-    var peteObj = {id: "pete", name: "Pete", hp: 150, ap: 5, cap: 10, attackMove: "Belly Bounce"};
+    var mickeyObj = {id: "mickey", name: "Mickey", hp: 100, ap: 15, cap: 5, attackMove: "Ear Slap"};
+    var donaldObj = {id: "donald", name: "Donald", hp: 125, ap: 10, cap: 10, attackMove: "Wing Flap"};
+    var goofyObj = {id: "goofy", name: "Goofy", hp: 100, ap: 15, cap: 5, attackMove: "Seismic Chuckle"};
+    var peteObj = {id: "pete", name: "Pete", hp: 150, ap: 5, cap: 20, attackMove: "Belly Bounce"};
 
     // Builds the array of playable toons to easily retrieve attributes for each toon during gameplay
     function buildToonArray()
