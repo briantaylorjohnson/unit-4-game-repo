@@ -271,13 +271,13 @@ $(document).ready(function() {
             // Conditional that prevents the player from picking his toon as an opponent
             if ($(this).attr("toonId") == toonPickedId)
             {
-                alert("You can't fight yourself, silly!");
+                $('#cantFightSelf').modal();
             }
 
             // Conditional that prevents the player from picking a knocked out opponent
             else if (parseInt($(this).find(".hp").text()) == 0)
             {
-                alert("This opponent has been knocked out! Pick a different opponent.");
+                $('##oppKnockedOut').modal();
             }
 
             // When the player picks a valid opponent, this moves the toon to the defender space on the game board
@@ -321,7 +321,7 @@ $(document).ready(function() {
         // Alerts the player if he has not picked a toon to play with or an opponent to battle against
         else
         {
-            alert("You must pick a character and opponent first!");
+            $('#mustPickToon').modal();  
         }
     });
     
